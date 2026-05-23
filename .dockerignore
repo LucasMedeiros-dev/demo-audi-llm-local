@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
+.ruff_cache/
+
+# Índice gerado em runtime (criado pela ingestão dentro do container)
+faiss_index/
+
+# Frontend — node_modules e build são refeitos no stage de build
+web/node_modules/
+web/dist/
+
+# Misc
+.git/
+.gitignore
+*.md
+memory/

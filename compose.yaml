@@ -1,0 +1,33 @@
+# Docker Compose — app (FastAPI + front buildado) conectando ao Ollama do HOST.
+#
+# Pré-requisito: Ollama rodando na máquina host (https://ollama.com).
+# O app acessa o host via host.docker.internal. Os modelos são puxados
+# automaticamente no primeiro start (ver entrypoint.sh).
+#
+#   docker compose up --build
+#   -> site + chat em http://localhost:8000
+
+services:
+  app:
+    build: .
+    image: recall-audi:latest
+    container_name: recall-audi
+    ports:
+      - "8000:8000"
+    environment:
+      # Conecta no Ollama da máquina host.
+      OLLAMA_BASE_URL: "http://192.168.0.36:11434"
+      OLLAMA_MODEL: "gemma4:e4b"
+      OLLAMA_EMBED_MODEL: "bge-m3"
+      INDEX_DIR: "/app/faiss_index"
+    # Necessário no Linux para que host.docker.internal resolva o host.
+    # No Docker Desktop (Windows/Mac) já funciona por padrão.
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      # Persiste o índice FAISS entre execuções (ingestão roda só uma vez).
+      - faiss_index:/app/faiss_index
+    restart: unless-stopped
+
+volumes:
+  faiss_index:

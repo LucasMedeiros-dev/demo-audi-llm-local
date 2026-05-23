@@ -1,0 +1,420 @@
+/* ----- Tema Audi: preto/branco/prata + vermelho institucional ----- */
+:root {
+  --audi-red: #bb0a30;
+  --audi-red-dark: #8e0824;
+  --ink: #0b0b0d;
+  --ink-soft: #1a1a1f;
+  --silver: #d9dce1;
+  --silver-soft: #f3f4f6;
+  --gray: #6b7280;
+  --white: #ffffff;
+  --shadow: 0 18px 50px rgba(0, 0, 0, 0.28);
+  --radius: 14px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--ink);
+  background: var(--white);
+  line-height: 1.6;
+}
+
+.container {
+  width: min(1180px, 92%);
+  margin: 0 auto;
+}
+
+/* ----- Navbar ----- */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: rgba(11, 11, 13, 0.92);
+  backdrop-filter: blur(8px);
+  color: var(--white);
+}
+.nav .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 66px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.rings {
+  display: flex;
+  gap: 4px;
+}
+.rings span {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--white);
+  border-radius: 50%;
+}
+.nav a {
+  color: var(--silver);
+  text-decoration: none;
+  margin-left: 26px;
+  font-size: 0.92rem;
+}
+.nav a:hover {
+  color: var(--white);
+}
+
+/* ----- Hero ----- */
+.hero {
+  position: relative;
+  min-height: 86vh;
+  display: flex;
+  align-items: center;
+  color: var(--white);
+  background:
+    linear-gradient(180deg, rgba(11, 11, 13, 0.74), rgba(11, 11, 13, 0.58)),
+    url("https://commons.wikimedia.org/wiki/Special:FilePath/Audi_RS5_(ABA-8TCFSF)_front.JPG?width=1800")
+      center / cover no-repeat;
+}
+.hero-content {
+  max-width: 640px;
+}
+.tag {
+  display: inline-block;
+  background: var(--audi-red);
+  color: var(--white);
+  font-size: 0.74rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: 999px;
+  margin-bottom: 22px;
+}
+.hero h1 {
+  font-size: clamp(2.1rem, 5vw, 3.6rem);
+  line-height: 1.1;
+  font-weight: 800;
+  margin-bottom: 18px;
+}
+.hero p {
+  font-size: 1.12rem;
+  color: var(--silver);
+  margin-bottom: 30px;
+}
+
+/* ----- Botões ----- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 14px 28px;
+  border-radius: 999px;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+.btn:hover {
+  transform: translateY(-2px);
+}
+.btn-primary {
+  background: var(--audi-red);
+  color: var(--white);
+}
+.btn-primary:hover {
+  background: var(--audi-red-dark);
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--white);
+  border: 1.5px solid var(--silver);
+}
+
+/* ----- Seções ----- */
+section {
+  padding: 84px 0;
+}
+.section-head {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 54px;
+}
+.section-head span {
+  color: var(--audi-red);
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+}
+.section-head h2 {
+  font-size: clamp(1.7rem, 3.5vw, 2.5rem);
+  margin: 10px 0 12px;
+}
+.section-head p {
+  color: var(--gray);
+}
+
+/* ----- Grade de veículos ----- */
+.vehicles {
+  background: var(--silver-soft);
+}
+.grid {
+  display: grid;
+  gap: 26px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+.card {
+  background: var(--white);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow);
+}
+.card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+.card-body {
+  padding: 20px 22px 24px;
+}
+.card-body h3 {
+  font-size: 1.2rem;
+  margin-bottom: 6px;
+}
+.card-body p {
+  color: var(--gray);
+  font-size: 0.94rem;
+}
+
+/* ----- Passos (como funciona) ----- */
+.steps {
+  display: grid;
+  gap: 26px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+.step {
+  text-align: center;
+  padding: 30px 22px;
+  border: 1px solid var(--silver);
+  border-radius: var(--radius);
+}
+.step .num {
+  width: 46px;
+  height: 46px;
+  margin: 0 auto 16px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--white);
+  font-weight: 700;
+}
+.step h3 {
+  margin-bottom: 8px;
+}
+.step p {
+  color: var(--gray);
+  font-size: 0.95rem;
+}
+
+/* ----- CTA final ----- */
+.cta {
+  background: var(--ink);
+  color: var(--white);
+  text-align: center;
+}
+.cta h2 {
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  margin-bottom: 14px;
+}
+.cta p {
+  color: var(--silver);
+  margin-bottom: 30px;
+}
+
+/* ----- Footer ----- */
+footer {
+  background: var(--ink-soft);
+  color: var(--silver);
+  padding: 32px 0;
+  font-size: 0.86rem;
+  text-align: center;
+}
+
+/* ===================== CHAT WIDGET ===================== */
+.chat-launcher {
+  position: fixed;
+  right: 26px;
+  bottom: 26px;
+  z-index: 60;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  background: var(--audi-red);
+  color: var(--white);
+  font-size: 1.6rem;
+  box-shadow: var(--shadow);
+  transition: transform 0.15s ease;
+}
+.chat-launcher:hover {
+  transform: scale(1.06);
+}
+
+.chat-panel {
+  position: fixed;
+  right: 26px;
+  bottom: 26px;
+  z-index: 70;
+  width: min(410px, calc(100% - 32px));
+  height: min(640px, calc(100% - 52px));
+  background: var(--white);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.chat-header {
+  background: var(--ink);
+  color: var(--white);
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.chat-header .title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+}
+.chat-header button {
+  background: transparent;
+  border: none;
+  color: var(--silver);
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+.chat-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 18px;
+  background: var(--silver-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.msg {
+  max-width: 84%;
+  padding: 11px 14px;
+  border-radius: 14px;
+  font-size: 0.94rem;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+.msg.bot {
+  align-self: flex-start;
+  background: var(--white);
+  border: 1px solid var(--silver);
+  border-bottom-left-radius: 4px;
+}
+.msg.user {
+  align-self: flex-end;
+  background: var(--audi-red);
+  color: var(--white);
+  border-bottom-right-radius: 4px;
+}
+.msg.alert {
+  align-self: flex-start;
+  background: #fdecec;
+  border: 1px solid #f5c2c2;
+  color: #7a1020;
+}
+.suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0 18px 10px;
+  background: var(--silver-soft);
+}
+.suggestions button {
+  background: var(--white);
+  border: 1px solid var(--silver);
+  border-radius: 999px;
+  padding: 7px 12px;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+.suggestions button:hover {
+  border-color: var(--audi-red);
+  color: var(--audi-red);
+}
+.chat-input {
+  display: flex;
+  gap: 8px;
+  padding: 12px;
+  border-top: 1px solid var(--silver);
+  background: var(--white);
+}
+.chat-input input {
+  flex: 1;
+  border: 1px solid var(--silver);
+  border-radius: 999px;
+  padding: 11px 16px;
+  font-size: 0.94rem;
+  outline: none;
+}
+.chat-input input:focus {
+  border-color: var(--audi-red);
+}
+.chat-input button {
+  background: var(--audi-red);
+  color: var(--white);
+  border: none;
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+.chat-input button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.typing {
+  align-self: flex-start;
+  color: var(--gray);
+  font-size: 0.86rem;
+  font-style: italic;
+}
+
+@media (max-width: 520px) {
+  .chat-panel {
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+  }
+}

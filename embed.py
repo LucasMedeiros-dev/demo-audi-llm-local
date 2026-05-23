@@ -50,7 +50,7 @@ def build_index() -> FAISS:
     """
     Lê os PDFs, divide em chunks, gera os embeddings e grava o índice FAISS.
 
-    Etapa de INGESTÃO — chamada pelo ingest.py, não pelo dashboard. É aqui que
+    Etapa de INGESTÃO — chamada pelo ingest.py, não pela API. É aqui que
     os documentos são embeddados (uma vez), não a cada pergunta.
     """
     loader = PyPDFDirectoryLoader(DOCS_DIR)
