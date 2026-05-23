@@ -9,8 +9,8 @@ import json
 import os
 import re
 
-from langchain_ollama import ChatOllama
 from langchain_core.prompts import ChatPromptTemplate
+from langchain_ollama import ChatOllama
 
 # Modelo de chat servido pelo Ollama. Rode antes:  ollama pull gemma3:4b
 OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "gemma4:e4b")

@@ -46,8 +46,13 @@ def get_embeddings() -> BGEEmbeddings:
     return BGEEmbeddings(model=EMBED_MODEL, base_url=OLLAMA_BASE_URL)
 
 
-def _build_index() -> FAISS:
-    """Lê os PDFs, divide em chunks e cria o índice FAISS."""
+def build_index() -> FAISS:
+    """
+    Lê os PDFs, divide em chunks, gera os embeddings e grava o índice FAISS.
+
+    Etapa de INGESTÃO — chamada pelo ingest.py, não pelo dashboard. É aqui que
+    os documentos são embeddados (uma vez), não a cada pergunta.
+    """
     loader = PyPDFDirectoryLoader(DOCS_DIR)
     documents = loader.load()
     if not documents:
@@ -63,12 +68,18 @@ def _build_index() -> FAISS:
     return vectorstore
 
 
-def load_vectorstore(rebuild: bool = False) -> FAISS:
+def load_vectorstore() -> FAISS:
     """
-    Carrega o índice FAISS do disco; cria se não existir (ou se rebuild=True).
+    Carrega o índice FAISS já gravado em disco.
+
+    NÃO constrói o índice: se ele não existir, orienta a rodar a ingestão.
+    A construção é responsabilidade do ingest.py.
     """
-    if rebuild or not os.path.isdir(INDEX_DIR):
-        return _build_index()
+    if not os.path.isdir(INDEX_DIR):
+        raise RuntimeError(
+            f"Índice FAISS não encontrado em '{INDEX_DIR}/'. "
+            "Rode a ingestão uma vez antes:  python ingest.py"
+        )
 
     return FAISS.load_local(
         INDEX_DIR,
@@ -77,9 +88,9 @@ def load_vectorstore(rebuild: bool = False) -> FAISS:
     )
 
 
-def get_retriever(rebuild: bool = False, k: int = 4):
-    """Retorna um retriever pronto para o RAG, restringível por documento."""
-    vectorstore = load_vectorstore(rebuild=rebuild)
+def get_retriever(k: int = 4):
+    """Retorna um retriever pronto para o RAG, a partir do índice já gravado."""
+    vectorstore = load_vectorstore()
     return vectorstore.as_retriever(search_kwargs={"k": k})
 
 

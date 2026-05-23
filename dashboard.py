@@ -15,7 +15,7 @@ Barra lateral = "cheat sheet": documentos carregados e veículos atendidos.
 import streamlit as st
 
 from embed import get_retriever, retrieve_context
-from llm import get_llm, extract_fields, PROMPT
+from llm import PROMPT, extract_fields, get_llm
 from vehicles import DOCUMENTS, find_vehicle, list_models
 
 st.set_page_config(page_title="Assistente de Recall — Concessionárias", page_icon="🔧")
@@ -29,9 +29,9 @@ SUGESTOES = [
 
 
 # ---------------------------------------------------------------- recursos
-@st.cache_resource(show_spinner="Preparando o índice de busca (FAISS + BGE-M3)...")
+@st.cache_resource(show_spinner="Carregando o índice de busca (FAISS + BGE-M3)...")
 def boot():
-    """Carrega LLM e retriever uma única vez (cacheado entre reruns)."""
+    """Carrega LLM e retriever (índice já gravado) uma vez, cacheado."""
     return get_llm(), get_retriever()
 
 
@@ -82,7 +82,12 @@ with st.sidebar:
 st.title("🔧 Assistente de Recall Audi")
 st.caption("Ferramenta de apoio ao **concessionário** no atendimento de recalls.")
 
-llm, retriever = boot()
+try:
+    llm, retriever = boot()
+except RuntimeError as e:
+    st.error(str(e))
+    st.info("No terminal, rode uma vez:  `python ingest.py`  e recarregue a página.")
+    st.stop()
 
 
 # ---------------------------------------------------------------- histórico
@@ -172,7 +177,7 @@ def processar(texto: str):
 if st.session_state.stage == "qa":
     st.write("**Sugestões:**")
     cols = st.columns(len(SUGESTOES))
-    for col, sug in zip(cols, SUGESTOES):
+    for col, sug in zip(cols, SUGESTOES, strict=True):
         if col.button(sug, use_container_width=True):
             processar(sug)
 

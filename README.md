@@ -25,7 +25,8 @@ recall; o RAG (`embed.py` + `llm.py`) responde os detalhes técnicos.
 | Arquivo         | Responsabilidade                                            |
 |-----------------|-------------------------------------------------------------|
 | `llm.py`        | Setup do LLM local (Ollama) e prompt do assistente.         |
-| `embed.py`      | Embeddings BGE-M3 + índice FAISS (criação e busca).         |
+| `embed.py`      | Embeddings BGE-M3 + índice FAISS (build e busca).           |
+| `ingest.py`     | Ingestão: embedda os PDFs e grava o FAISS (rodar 1x).       |
 | `vehicles.py`   | Lista de veículos cobertos (extraída dos PDFs reais).        |
 | `dashboard.py`  | Interface Streamlit (chat + sidebar).                       |
 | `docs/`         | Boletins técnicos (PDFs reais).                             |
@@ -43,11 +44,17 @@ ollama pull bge-m3           # embeddings (multilíngue)
 
 ```bash
 pip install -r requirements.txt
+
+# 1) Ingestão: embedda os PDFs e grava o índice FAISS (rode UMA vez)
+python ingest.py
+
+# 2) Suba o dashboard (apenas carrega o índice já pronto)
 streamlit run dashboard.py
 ```
 
-O índice FAISS é criado na primeira execução (em `faiss_index/`) e reaproveitado
-depois. Para reconstruir, apague a pasta `faiss_index/`.
+A ingestão embedda todos os documentos de uma vez e grava em `faiss_index/`.
+O dashboard só carrega esse índice — por pergunta, embedda apenas a query.
+Trocou os PDFs? Rode `python ingest.py --rebuild`.
 
 ## Configuração (variáveis de ambiente, opcional)
 

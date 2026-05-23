@@ -12,11 +12,17 @@ responde os detalhes técnicos a partir do conteúdo dos PDFs.
 
 # Documento -> descrição curta (mostrado no "cheat sheet" da barra lateral)
 DOCUMENTS = {
-    "MC-10124507-9999.pdf": "Audi RS5 (2013) — Ruído/chiado no freio dianteiro (TSB 46 Brake noise)",
-    "MC-10245688-0001.pdf": "Audi pre sense / frenagem automática (MLB) — diversos modelos 2017–2025 (TSB 90)",
+    "MC-10124507-9999.pdf": (
+        "Audi RS5 (2013) — Ruído/chiado no freio dianteiro (TSB 46 Brake noise)"
+    ),
+    "MC-10245688-0001.pdf": (
+        "Audi pre sense / frenagem automática (MLB) — "
+        "diversos modelos 2017–2025 (TSB 90)"
+    ),
 }
 
-# Cada entrada: modelo -> lista de coberturas {"anos": [(ini, fim), ...], "doc": arquivo}
+# Cada entrada: modelo -> lista de coberturas
+# {"anos": [(ini, fim), ...], "doc": arquivo}
 # "anos" são faixas inclusivas. Modelos normalizados em minúsculas.
 _PRESENSE = "MC-10245688-0001.pdf"
 _BRAKE = "MC-10124507-9999.pdf"
@@ -132,8 +138,3 @@ def list_models():
         todas = [f for c in coberturas for f in c["anos"]]
         linhas.append(f"{modelo.upper()} ({_anos_str(sorted(set(todas)))})")
     return linhas
-
-
-def model_names():
-    """Nomes de modelos (formatados) para um dropdown."""
-    return [m.upper() for m in VEHICLES]
